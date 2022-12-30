@@ -31,7 +31,7 @@ const routes = [
         }
       },
       {
-        path: '',
+        path: '/',
         redirect: {name: 'pokemon-about'}
       },
   ]
@@ -53,7 +53,7 @@ const routes = [
         component: ()=> import(/*webpackChunkName: "AboutDbz"*/'@/modules/dbz/pages/About.vue')
       },
       {
-        path: '',
+        path: "/",
         redirect:{name:'dbz-character'}
       }
     ]
@@ -70,6 +70,21 @@ const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
   history: createWebHashHistory(),
   routes, // short for `routes: routes`
+})
+
+
+//Guard Global -Sincrono
+router.beforeEach( (to,from,next) =>{
+  // console.log(to,from,next);
+  const random  = Math.random()*100
+  if(random >50){
+    console.log('Autenticación');
+    next()
+  }else{
+    console.log(random, 'bloqueado por el beforeEach Guard ');
+    next({name: 'pokemon-home'})
+  }
+
 })
 
 
